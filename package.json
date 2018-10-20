@@ -11,8 +11,12 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "http": "0.0.0",
     "jsonwebtoken": "^8.3.0",
+    "mocha": "^5.2.0",
     "mongoose": "^5.2.12",
-    "node-watch": "^0.5.8"
+    "node-watch": "^0.5.8",
+    "really-need": "^1.9.2",
+    "supertest": "^3.3.0"
   }
 }

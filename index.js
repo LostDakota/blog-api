@@ -22,14 +22,15 @@ mongoose.connect(dbConfig.url, {
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, content-Type, Accept");
     next();
-})
-
-app.use(express.static('public'));
+});
 
 require('./routes/post.routes')(app);
 
-app.listen(3001, () => {
-    console.log("Listening on 3001");
-});
+const server = require('http').createServer(app);
+server.listen(3001);
+
+
+module.exports = server;
