@@ -25,7 +25,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     Post.find()
-        .sort('-date')
+        .sort('-createdAt')
     .then(posts => {
         res.send(posts);
     }).catch(err => { 
