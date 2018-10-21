@@ -22,11 +22,16 @@ exports.create = (req, res) => {
 }
 
 exports.authenticate = (req, res) => {
-    User.find({
+    User.findOne({
         name: req.body.username,
-        pasword: req.body.password
+        password: req.body.password
     }).then(user => {
-        res.status(200).send(user);
+        let token = jwt.sign({name: user.name}, Secret.secret, {expiresIn: 60});
+        res.json({
+            success: true,
+            message: 'Successfully authenticated',
+            token: token
+        })
     }).catch(err => {
         res.status(500).send({error: err.message});
     });
