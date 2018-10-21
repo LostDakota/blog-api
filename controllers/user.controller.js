@@ -26,7 +26,7 @@ exports.authenticate = (req, res) => {
         name: req.body.username,
         password: req.body.password
     }).then(user => {
-        let token = jwt.sign({name: user.name}, Secret.secret, {expiresIn: 60});
+        let token = jwt.sign({name: user.name}, Secret.secret, {expiresIn: '1h'});
         res.json({
             success: true,
             message: 'Successfully authenticated',
