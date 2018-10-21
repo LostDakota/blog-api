@@ -9,7 +9,8 @@ exports.create = (req, res) => {
 
     const post = new Post({
         title: req.body.title || "Untitled Entry",
-        content: req.body.content
+        content: req.body.content,
+        tags: req.body.tags
     });
 
     post.save()
@@ -25,8 +26,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     Post.find()
-        .sort({'createdAt': -1})
-        .find()
+    .sort({'createdAt': -1})
     .then(posts => {
         res.send(posts);
     }).catch(err => { 
