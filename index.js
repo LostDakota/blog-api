@@ -2,9 +2,10 @@ const express  = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(bodyParser({limit: '50mb'}))
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(bodyParser({limit: '50mb'}))
 
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
