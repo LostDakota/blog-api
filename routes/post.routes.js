@@ -1,6 +1,7 @@
 module.exports = (app) => {
     const posts = require('../controllers/post.controller');
     const user = require('../controllers/user.controller');
+    const images = require('../controllers/image.controller');
 
     // unprotected
     app.get('/posts', posts.findAll);
@@ -12,4 +13,6 @@ module.exports = (app) => {
     app.post('/post/:postId', posts.delete);    
 
     app.post('/login', user.authenticate);
+
+    app.post('/image', images.upload);
 }
