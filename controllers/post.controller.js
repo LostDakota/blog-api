@@ -66,7 +66,8 @@ exports.update = (req, res) => {
 
     Post.findByIdAndUpdate(req.params.postId, {
         title: req.body.title || "Untitled Post",
-        content: req.body.content
+        content: req.body.content,
+        tags: req.body.tags
     }, {new: true})
     .then(post => {
         if(!post) {
