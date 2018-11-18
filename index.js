@@ -30,6 +30,7 @@ app.use((req, res, next) => {
 });
 
 require('./routes/post.routes')(app);
+require('./controllers/image.controller')(app);
 
 const server = require('http').createServer(app);
 server.listen(3001);

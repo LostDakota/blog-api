@@ -13,6 +13,4 @@ module.exports = (app) => {
     app.post('/post/:postId', posts.delete);    
 
     app.post('/login', user.authenticate);
-
-    app.post('/image', images.upload);
 }
