@@ -13,6 +13,6 @@ let upload = multer({storage: storage});
 
 module.exports = (app) => {
     app.post('/image', upload.single('image'), (req, res) => {
-        res.send('ok');
+        res.send(req.file.originalname);
     });
 }
