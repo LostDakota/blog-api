@@ -2,7 +2,7 @@ const puppet = require('puppeteer');
 const fs = require('fs');
 
 let scrape = async (url = 'https://mika.house') => {
-    const browser = await puppet.launch({headless: true});
+    const browser = await puppet.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
 
     await page.goto(url, {
