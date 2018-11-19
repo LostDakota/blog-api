@@ -14,7 +14,8 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false
 }).then(() => {
     console.log('Successfully connected to the database.');
 }).catch(err => {
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 
 require('./routes/post.routes')(app);
 require('./controllers/image.controller')(app);
+require('./controllers/scraper.controller')(app);
 
 const server = require('http').createServer(app);
 server.listen(3001);

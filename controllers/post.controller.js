@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const sitemap = require('./scraper.controller');
 
 exports.create = (req, res) => {
     if(!req.body.content){
@@ -15,6 +16,7 @@ exports.create = (req, res) => {
 
     post.save()
         .then(data => {
+            sitemap();
             res.send(data);
         })
         .catch(err => {
@@ -89,13 +91,14 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    Post.findByIdAndRemove(req.params.postId)
+    Post.findOneAndRemove({_id: req.params.postId})
     .then(post => {
         if(!post) {
             return res.status(404).send({
                 message: "Post not found with id " + req.params.postId
             });
         }
+        sitemap();
         res.send({message: "Post deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
