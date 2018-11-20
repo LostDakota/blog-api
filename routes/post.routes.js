@@ -6,6 +6,7 @@ module.exports = (app) => {
     // unprotected
     app.get('/posts', posts.findAll);
     app.get('/post/:postId', posts.findOne);
+    app.get('/tags/:tag', posts.tags);
 
     // protected
     app.post('/post', posts.create);

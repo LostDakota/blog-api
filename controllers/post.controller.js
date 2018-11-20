@@ -91,7 +91,7 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    Post.findOneAndRemove({_id: req.params.postId})
+    Post.findOneAndRemove({ _id: req.params.postId })
     .then(post => {
         if(!post) {
             return res.status(404).send({
@@ -110,4 +110,16 @@ exports.delete = (req, res) => {
             message: "Could not delete post with id " + req.params.postId
         });
     });
+}
+
+exports.tags = (req, res) => {
+    console.log(req.params.tag);
+    Post.find({ tags: req.params.tag })
+        .then(posts => {
+            if(posts){
+                return res.json(posts);
+            } else {
+                return res.status(200);
+            }
+        });
 }

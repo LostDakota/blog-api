@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const PostSchema = mongoose.Schema({
     title: String,
     content: String,
-    tags: Array,
+    tags: [String],
     createdBy: String
 }, {
     timestamps: true
