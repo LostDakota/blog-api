@@ -59,6 +59,14 @@ exports.findOne = (req, res) => {
     });
 }
 
+exports.latest = (req, res) => {
+    Post.findOne({}, {}, { sort: {'createdAt': -1} })
+        .then(post => {
+            if(!post) return res.status(404).send('Not found');
+            return res.status(200).json(post);
+        });
+}
+
 exports.update = (req, res) => {
     if(!req.body.content) {
         return res.status(400).send({
