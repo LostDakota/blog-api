@@ -46,7 +46,6 @@ exports.findOne = (req, res) => {
                     message: "Post not found with id " + req.params.postId
                 });            
             }
-            post.content = post.console.replace('ql-content', 'ql-content prettyprint');
             res.send(post);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
