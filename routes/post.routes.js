@@ -1,7 +1,7 @@
 module.exports = (app) => {
     const posts = require('../controllers/post.controller');
     const user = require('../controllers/user.controller');
-    const sitemap = require('../controllers/scraper.controller');
+    const scraper = require('../controllers/scraper.controller');
 
     // unprotected
     app.get('/posts', posts.findAll);
@@ -17,7 +17,12 @@ module.exports = (app) => {
     app.post('/login', user.authenticate);
 
     app.get('/sitemap', (req, res) => {
-        sitemap();
+        scraper.sitemap();
         res.status(200).json('ok');
+    });
+
+    app.get('/static', (req, res) => {
+        scraper.static();
+        res.status(200).send('ok');
     });
 }

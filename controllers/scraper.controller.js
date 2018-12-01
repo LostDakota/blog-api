@@ -1,5 +1,6 @@
 const puppet = require('puppeteer');
 const fs = require('fs');
+const fsPath = require('fs-path');
 
 let scrape = async (url = 'https://mika.house') => {
     const browser = await puppet.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']});
@@ -16,29 +17,68 @@ let scrape = async (url = 'https://mika.house') => {
     return results.filter(link => link.indexOf('mika.house') !== -1);
 }
 
-module.exports = () => {
+let generate = async (link) => {
+    const browser = await puppet.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const page = await browser.newPage();
+
+    await page.goto(link, {
+        waitUntil: 'networkidle2'
+    });
+    
+    const result = await page.content();
+
+    browser.close();
+
+    let basePath = link.replace("https://mika.house/", "");
+    let path = basePath.length > 0 ? `${basePath}/` : '';
+    let name = `static/${path}index.html`;
+    fsPath.writeFile(name, result, (err) => {
+        console.log(`wrote ${name}`);
+        if(err) return err;
+        return true;
+    });
+}
+
+let distinct = (value, index, self) => {
+    return self.indexOf(value) === index;
+}
+
+exports.sitemap = () => {
     let results = [];
-    scrape().then(data => {
-        data.forEach(d => results.push(d));
-        scrape('https://mika.house/blog').then(data => {
-            data.forEach(d => {
-                if(!results.includes(d)){
-                    results.push(d);
-                }
-            });
-            fs.writeFile('sitemap.xml', sitemapBuilder(results), (err) => {
-                if(err) return err;
-                return true;     
+    scrape()
+        .then(data => {
+            data.forEach(d => results.push(d));
+            scrape('https://mika.house/blog').then(data => {
+                data.forEach(d => {
+                    if(!results.includes(d)){
+                        results.push(d);
+                    }
+                });
+                fs.writeFile('sitemap.xml', sitemapBuilder(results), (err) => {
+                    if(err) return err;
+                    return true;     
+                });
             });
         });
-    });
+},
+
+exports.static = () => {
+       scrape('https://mika.house/blog')
+        .then(data => {
+            for(const link of data.filter(distinct)) {
+                generate(link)
+                    .then(() => {
+                        
+                    });
+            }
+        });
 }
 
 let sitemapBuilder = (links) => {
     var map = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
     links.forEach(link => {
-        map += '<url><loc>' + link +'</loc><priority>0.5</priority></url>\n';
+        map += `<url><loc>${link}</loc><priority>0.5</priority></url>\n`
     });
 
     map += '</urlset>';
