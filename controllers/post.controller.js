@@ -40,23 +40,24 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
     Post.findById(req.params.postId)
-    .then(post => {
-        if(!post) {
-            return res.status(404).send({
-                message: "Post not found with id " + req.params.postId
-            });            
-        }
-        res.send(post);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Post not found with id " + req.params.postId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving post with id " + req.params.postId
+        .then(post => {
+            if(!post) {
+                return res.status(404).send({
+                    message: "Post not found with id " + req.params.postId
+                });            
+            }
+            post.content = post.console.replace('ql-content', 'ql-content prettyprint');
+            res.send(post);
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Post not found with id " + req.params.postId
+                });                
+            }
+            return res.status(500).send({
+                message: "Error retrieving post with id " + req.params.postId
+            });
         });
-    });
 }
 
 exports.latest = (req, res) => {
