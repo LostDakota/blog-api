@@ -11,7 +11,8 @@ exports.create = (req, res) => {
     const post = new Post({
         title: req.body.title || "Untitled Entry",
         content: req.body.content,
-        tags: req.body.tags
+        tags: req.body.tags,
+        description: req.body.description
     });
 
     post.save()

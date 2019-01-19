@@ -4,7 +4,8 @@ const PostSchema = mongoose.Schema({
     title: String,
     content: String,
     tags: [String],
-    createdBy: String
+    createdBy: String,
+    description: String
 }, {
     timestamps: true
 });
