@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         title: req.body.title || "Untitled Entry",
         content: req.body.content,
         tags: req.body.tags,
-        description: req.body.description
+        description: req.body.description || ""
     });
 
     post.save()
