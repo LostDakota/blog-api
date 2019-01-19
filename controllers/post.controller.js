@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         title: req.body.title || "Untitled Entry",
         content: req.body.content,
         tags: req.body.tags,
-        description: req.body.description || ""
+        description: req.body.description
     });
 
     post.save()
@@ -78,7 +78,8 @@ exports.update = (req, res) => {
     Post.findByIdAndUpdate(req.params.postId, {
         title: req.body.title || "Untitled Post",
         content: req.body.content,
-        tags: req.body.tags
+        tags: req.body.tags,
+        description: req.body.description
     }, {new: true})
     .then(post => {
         if(!post) {
