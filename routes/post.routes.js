@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.get('/posts', posts.findAll);
     app.get('/post/:postId', posts.findOne);
     app.get('/tags/:tag', posts.tags);
-    app.get('/latest', posts.latest);
+    app.get('/latest/:count', posts.latest);
 
     // protected
     app.post('/post', posts.create);

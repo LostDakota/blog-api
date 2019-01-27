@@ -61,8 +61,7 @@ exports.findOne = (req, res) => {
 }
 
 exports.latest = (req, res) => {
-    let total = req.body.postCount || 4;
-    Post.find({}, {}, { sort: {'createdAt': -1} }).limit(total)
+    Post.find({}, {}, { sort: {'createdAt': -1} }).limit(req.params.count || 3)
         .then(post => {
             if(!post) return res.status(404).send('Not found');
             return res.status(200).json(post);
