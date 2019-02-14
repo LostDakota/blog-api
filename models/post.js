@@ -5,6 +5,7 @@ const PostSchema = mongoose.Schema({
     content: String,
     tags: [String],
     createdBy: String,
+    slug: String,
     description: String
 }, {
     timestamps: true

@@ -12,6 +12,7 @@ exports.create = (req, res) => {
         title: req.body.title || "Untitled Entry",
         content: req.body.content,
         tags: req.body.tags,
+        slug: req.body.title.toLowerCase().split(' ').join('-').replace(/\W/g, ''),
         description: req.body.description
     });
 
