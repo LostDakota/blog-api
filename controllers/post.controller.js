@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         title: req.body.title || "Untitled Entry",
         content: req.body.content,
         tags: req.body.tags,
-        slug: req.body.title.toLowerCase().split(' ').join('-').replace(/\W/g, ''),
+        slug: req.body.title.toLowerCase().replace(/[^\w\s]/gi, '-'),
         description: req.body.description
     });
 
@@ -80,7 +80,7 @@ exports.update = (req, res) => {
         title: req.body.title || "Untitled Post",
         content: req.body.content,
         tags: req.body.tags,
-        slug: req.body.title.toLowerCase().split(' ').join('-').replace(/\W/g, ''),
+        slug: req.body.title.toLowerCase().replace(/[^\w\s]/gi, '-'),
         description: req.body.description
     }, {new: true})
     .then(post => {
