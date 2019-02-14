@@ -80,6 +80,7 @@ exports.update = (req, res) => {
         title: req.body.title || "Untitled Post",
         content: req.body.content,
         tags: req.body.tags,
+        slug: req.body.title.toLowerCase().split(' ').join('-').replace(/\W/g, ''),
         description: req.body.description
     }, {new: true})
     .then(post => {
