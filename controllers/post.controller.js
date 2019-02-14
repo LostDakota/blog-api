@@ -41,7 +41,7 @@ exports.findAll = (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-    Post.findById(req.params.postId)
+    Post.findOne({slug: req.params.slug})
         .then(post => {
             if(!post) {
                 return res.status(404).send({

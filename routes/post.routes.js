@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     // unprotected
     app.get('/posts', posts.findAll);
-    app.get('/post/:postId', posts.findOne);
+    app.get('/post/:slug', posts.findOne);
     app.get('/tags/:tag', posts.tags);
     app.get('/latest/:count', posts.latest);
 
