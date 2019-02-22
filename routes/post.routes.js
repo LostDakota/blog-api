@@ -11,8 +11,8 @@ module.exports = (app) => {
 
     // protected
     app.post('/post', posts.create);
-    app.put('/post/:postId', posts.update);
-    app.post('/post/:postId', posts.delete);    
+    app.put('/post/:slug', posts.update);
+    app.post('/post/:slug', posts.delete);    
 
     app.post('/login', user.authenticate);
 
