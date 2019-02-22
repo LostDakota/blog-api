@@ -76,7 +76,7 @@ exports.update = (req, res) => {
         });
     }
 
-    Post.findByIdAndUpdate(req.params.postId, {
+    Post.findByOneAndUpdate({slug: req.params.slug}, {
         title: req.body.title || "Untitled Post",
         content: req.body.content,
         tags: req.body.tags,
@@ -86,28 +86,28 @@ exports.update = (req, res) => {
     .then(post => {
         if(!post) {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.postId
+                message: "Post not found with slug " + req.params.slug
             });
         }
         res.send(post);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.postId
+                message: "Post not found with slug " + req.params.slug
             });                
         }
         return res.status(500).send({
-            message: "Error updating post with id " + req.params.postId
+            message: "Error updating post with slug " + req.params.slug
         });
     });
 }
 
 exports.delete = (req, res) => {
-    Post.findOneAndRemove({ _id: req.params.postId })
+    Post.findOneAndRemove({ slug: req.params.slug })
     .then(post => {
         if(!post) {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.postId
+                message: "Post not found with slug " + req.params.slug
             });
         }
         scraper.sitemap();
@@ -115,11 +115,11 @@ exports.delete = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.postId
+                message: "Post not found with slug " + req.params.slug
             });                
         }
         return res.status(500).send({
-            message: "Could not delete post with id " + req.params.postId
+            message: "Could not delete post with slug " + req.params.slug
         });
     });
 }
