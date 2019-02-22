@@ -76,7 +76,7 @@ exports.update = (req, res) => {
         });
     }
 
-    Post.findByOneAndUpdate({slug: req.params.slug}, {
+    Post.findOneAndUpdate({slug: req.params.slug}, {
         title: req.body.title || "Untitled Post",
         content: req.body.content,
         tags: req.body.tags,
