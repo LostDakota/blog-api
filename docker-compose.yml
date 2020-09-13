@@ -2,12 +2,13 @@ version: '3'
 
 services:
     nodejs:
-        image: nodejs
-        container_name: nodejs
+        image: node
+        container_name: node
+        working_dir: /usr/app
         restart: unless-stopped
         ports:
             - "3001:3001"
         network_mode: "host"
         volumes: 
-            - ./src:/var/www/api
-        command: cd /var/www && npm install && node index.js
+            - ./src:/usr/app
+        command: bash -c 'npm install && node index.js'
