@@ -11,4 +11,5 @@ services:
         network_mode: "host"
         volumes: 
             - ./src:/usr/app
+            - /var/www/api/config:/usr/app/config
         command: bash -c 'npm install && node index.js'
