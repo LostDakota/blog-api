@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    nodejs:
+        image: nodejs
+        container_name: nodejs
+        restart: unless-stopped
+        ports:
+            - "3001:3001"
+        network_mode: "host"
+        volumes: 
+            - ./src:/var/www/api
+        command: cd /var/www && npm install && node index.js

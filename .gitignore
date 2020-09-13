@@ -1,5 +1,2 @@
-config/*
-node_modules
-uploads
-sitemap.xml
-static
+src/config/*
+src/node_modules
