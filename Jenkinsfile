@@ -5,7 +5,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh 'npm install'
+                sh 'docker-compose build'
             }
         }
         stage('Test') {
@@ -18,17 +19,5 @@ pipeline {
                 echo 'Deploying....'
             }
         }
-    }
-}
-// Script //
-node {
-    stage('Build') {
-        echo 'Building....'
-    }
-    stage('Test') {
-        echo 'Building....'
-    }
-    stage('Deploy') {
-        echo 'Deploying....'
     }
 }
