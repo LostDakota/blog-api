@@ -1,10 +1,14 @@
 pipeline {
     stages {
         stage('Cleaning') {
-            cleanWs()
+            steps {
+                cleanWs()
+            }            
         }
         stage('Checkout') {
-            checkout scm
+            steps {
+                checkout scm
+            }            
         }
         stage('Deploy') {
             steps {
