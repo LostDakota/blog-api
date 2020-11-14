@@ -1,7 +1,8 @@
 {
   "name": "developer-blog-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for https://mika.house",
+  "repository": "https://github.com/LostDakota/blog-api",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
