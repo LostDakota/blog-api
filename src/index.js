@@ -1,15 +1,32 @@
-const express  = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(express.static('uploads'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser({limit: '50mb'}))
+app.use(bodyParser({ limit: '50mb' }))
 
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
+
+let store = {};
+
+let cache = (req, res, next) => {
+    const key = req.url;
+    let value = store[key];
+    if (value) {
+        res.send(value)
+    } else {
+        res.sendResponse = res.send;
+        res.send = data => {
+            store[req.url] = data;
+            res.sendResponse(data);
+        }
+        next();
+    }
+}
 
 mongoose.Promise = global.Promise;
 
@@ -23,12 +40,14 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-app.use((req, res, next) => {
+app.use((_, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, content-Type, Accept");
     next();
 });
+
+app.get('*', cache);
 
 require('./routes/post.routes')(app);
 require('./controllers/image.controller')(app);
