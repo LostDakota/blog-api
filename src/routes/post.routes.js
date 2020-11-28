@@ -16,12 +16,12 @@ module.exports = (app) => {
 
     app.post('/login', user.authenticate);
 
-    app.get('/sitemap', (req, res) => {
+    app.get('/sitemap', (_, res) => {
         scraper.sitemap();
         res.status(200).json('ok');
     });
 
-    app.get('/static', (req, res) => {
+    app.get('/static', (_, res) => {
         scraper.static();
         res.status(200).send('ok');
     });

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 
 const app = express();
 
@@ -33,12 +34,13 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true,
     useFindAndModify: false
-}).then(() => {
-    console.log('Successfully connected to the database.');
-}).catch(err => {
+}).then(() => console.log('Successfully connected to the database.'))
+  .catch(err => {
     console.log(err);
     process.exit();
 });
+
+app.use(compression({ threshold: 1 }));
 
 app.use((_, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");

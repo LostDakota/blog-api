@@ -17,7 +17,7 @@ let scrape = async (url = 'https://mika.house') => {
     return results.filter(link => link.indexOf('mika.house') !== -1);
 }
 
-let generate = async (link) => {
+let generate = async link => {
     const browser = await puppet.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
 
@@ -39,16 +39,11 @@ let generate = async (link) => {
     });
 }
 
-let distinct = (value, index, self) => {
-    return self.indexOf(value) === index;
-}
+let distinct = (value, index, self) => self.indexOf(value) === index;
 
 exports.sitemap = () => {
     let results = [];
-    scrape()
-        .then(data => {
-            data.forEach(d => results.push(d));
-            scrape('https://mika.house/blog').then(data => {
+    scrape('https://mika.house/blog').then(data => {
                 data.forEach(d => {
                     if(!results.includes(d)){
                         results.push(d);
@@ -59,27 +54,21 @@ exports.sitemap = () => {
                     return true;     
                 });
             });
-        });
 },
 
 exports.static = () => {
        scrape('https://mika.house/blog')
         .then(data => {
             for(const link of data.filter(distinct)) {
-                generate(link)
-                    .then(() => {
-                        
-                    });
+                generate(link);
             }
         });
 }
 
-let sitemapBuilder = (links) => {
+let sitemapBuilder = links => {
     var map = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
-    links.forEach(link => {
-        map += `<url><loc>${link}</loc><priority>0.5</priority></url>\n`
-    });
+    links.forEach(link => map += `<url><loc>${link}</loc><priority>0.5</priority></url>\n`);
 
     map += '</urlset>';
 
