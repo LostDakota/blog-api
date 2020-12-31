@@ -12,4 +12,5 @@ services:
         volumes: 
             - ./src:/usr/app
             - /home/drew/.blog_api_config:/usr/app/config
+            - /var/www/uploads:/usr/app/uploads
         command: bash -c 'npm install && node index.js'
