@@ -5,7 +5,7 @@ const sm = require('./controllers/scraper.controller');
 
 const app = express();
 
-app.use(express.static('uploads'));
+app.use(express.static('./uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser({ limit: '50mb' }))
