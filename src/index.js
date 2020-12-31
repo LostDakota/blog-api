@@ -51,6 +51,16 @@ app.use((_, res, next) => {
 
 app.get('*', cache);
 
+app.post('*', (req, res, next) => {
+    cache = {};
+    next();
+});
+
+app.put('*', (req, res, next) => {
+    cache = {};
+    next();
+});
+
 require('./routes/post.routes')(app);
 require('./controllers/image.controller')(app);
 
