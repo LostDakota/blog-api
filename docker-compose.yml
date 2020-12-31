@@ -2,7 +2,7 @@ version: '2'
 
 services:
     nodejs:
-        image: node
+        image: node:latest
         container_name: node
         working_dir: /usr/app
         restart: unless-stopped
