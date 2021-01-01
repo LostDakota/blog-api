@@ -6,8 +6,6 @@ services:
         container_name: node
         working_dir: /usr/app
         restart: unless-stopped
-        ports:
-            - "3001:3001"
         network_mode: "host"
         volumes: 
             - ./src:/usr/app
