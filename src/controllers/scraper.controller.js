@@ -49,7 +49,7 @@ exports.sitemap = () => {
                         results.push(d);
                     }
                 });
-                fs.writeFile('../../blog/sitemap.xml', sitemapBuilder(results), (err) => {
+                fs.writeFile('/var/www/blog/sitemap.xml', sitemapBuilder(results), (err) => {
                     if(err) return err;
                     return true;     
                 });
