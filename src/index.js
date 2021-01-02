@@ -5,7 +5,7 @@ const sm = require('./controllers/scraper.controller');
 
 const app = express();
 
-app.use(express.static('./uploads'));
+app.use(express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser({ limit: '50mb' }))
@@ -49,6 +49,10 @@ app.use((_, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, content-Type, Accept");
     next();
 });
+
+app.get('/uploads/:fileName', (req, res) => {
+    res.redirect(`/${req.params.fileName}`);
+}); 
 
 app.get('*', cache);
 
