@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
-const sm = require('./controllers/scraper.controller');
 
 const app = express();
 
@@ -71,7 +70,5 @@ require('./controllers/image.controller')(app);
 
 const server = require('http').createServer(app);
 server.listen(3001);
-
-sm.sitemap();
 
 module.exports = server;
